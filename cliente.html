@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento - Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
+    <script src="sistem5.js"></script> 
+    <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+    <!-- Cabeçalho com logo -->
+    <header>
+        <img src="imagens/logo.png" alt="ice" class="logo">
+        <h2>Sistema de controle de estoque</h2>
+    </header>
+
+    <!-- Menu de navegação superior -->
+    <nav>
+        <div class="nav-buttons">
+            <a href="cadproduto.html" class="nav-btn active">Cadastro</a>
+            <a href="movimento_financeiro.html" class="nav-btn">Movimento</a>
+            <a href="pequisa_cliente.html" class="nav-btn">Pesquisa</a>
+        </div>
+    </nav>
+
+    <!-- Container principal -->
+    <div class="content-container">
+        <!-- Menu lateral -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="cadproduto.html">Produto</a></li>
+                <li class="active"><a href="cadcliente.html">Cliente</a></li>
+                <li><a href="funcionario-html.html">Funcionário</a></li>
+                <li><a href="servico-html.html">Fornecedor</a></li>
+            </ul>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <!-- Formulário de Cliente -->
+            <div class="form-container">
+                <h2 class="form-title">Cliente</h2>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" maxlenght="11" placeholder="Digite o CPF completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeCliente">Nome:</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailCliente">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Digite o E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefoneCliente">Telefone:</label>
+                        <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="enderecoCliente">Endereço:</label>
+                        <textarea id="enderecoCliente" name="enderecoCliente"></textarea>
+                    </div>
+                    <!-- Botão Cadastrar dentro do formulário -->
+                    <div class="form-buttons">
+                        <div class="button-container">
+                            <button type="submit" class="btn-cadastrar">Cadastrar Cliente</button>
+                            <div class="btn-shadow"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Botão Fechar Sistema movido para fora do form-container -->
+            <div class="buttons-wrapper">
+                <div class="button-container">
+                    <button class="btn-fechar"><a href="fechamento_sistema.html">Fechar Sistema</a></button>
+                    <div class="btn-shadow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+    <div class="footer-section company-info">
+    <div class="paia">
+            <img src="imagens/paia.png" alt="empresa" class="paia">
+        </div>
+    <h3>PAIA Sistems</h3>
+    <p>Soluções inteligentes para controle de estoque</p>
+    </div>
+
+    <div class="footer-section contact">
+    <h4>Contato</h4>
+    <p><i class="location-icon"></i> Av. Tecnologia, 1500 - Centro</p>
+    <p><i class="phone-icon"></i> (45) 3456-7890</p>
+    <p><i class="email-icon"></i> paia@paiasistems.com.br</p>
+    </div>
+
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2025 PAIA Sistems - Todos os direitos reservados</p>
+    <div class="footer-bottom-links">
+    <a href="#">Política de Privacidade</a>
+    <span class="separator">|</span>
+    <a href="#">Termos de Uso</a>
+    </div>
+    </div>
+    </footer>
+</body>
+</html>
