@@ -2,17 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve os arquivos estáticos da pasta "pub"
-app.use(express.static('pu'));
-
-// Configura o body-parser para ler JSON
+app.use(express.static('pub'));
 app.use(bodyParser.json());
 
-// Conexão com o banco de dados SQLite
 const db = new sqlite3.Database('./database.db', (err) => {
     if (err) {
         console.error('Erro ao conectar ao banco de dados:', err.message);
@@ -21,78 +16,66 @@ const db = new sqlite3.Database('./database.db', (err) => {
     }
 });
 
-// Criação das tabelas
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS clientes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            cpf TEXT NOT NULL UNIQUE,
-            email TEXT,
-            telefone TEXT,
-            endereco TEXT
-        )
-    `);
-    
+// criação das tabelas
+db.serialize(() =>{
+    db.run(`CREATE TABLE IF NOT EXISTS clientes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        cpf TEXT NOT NULL UNIQUE,
+        email TEXT NOT NULL,
+        telefone TEXT NOT NULL,
+        endereco TEXT NOT NULL
+      )`);
+  
+      console.log('Tabelas criadas com sucesso.');
+  
+   });
 
-    console.log('Tabelas criadas com sucesso.');
-});
+//cadastrar cliente
+app.post('/clientes', (req , res) => {
+      const { nome, cpf, email, telefone, endereco } = req.body;
 
+      if (!nome || !cpf) {
+          return res.status(400).send('Nome e CPF são obrigatórios.');
+      }
 
-///////////////////////////// Rotas para Clientes /////////////////////////////
-///////////////////////////// Rotas para Clientes /////////////////////////////
-///////////////////////////// Rotas para Clientes /////////////////////////////
+      const query = `INSERT INTO clientes (nome, cpf, email, telefone, endereco) VALUES (?, ?, ?, ?, ?)`;
+      db.run(query, [nome, cpf, email, telefone, endereco], function (err) {
+          if (err) {
+              return res.status(500).send('Erro ao cadastrar cliente.');
+          }
+          res.status(201).send({ id: this.lastID, message: 'Cliente cadastrado com sucesso.' });
+      });
+  });
 
-// Cadastrar cliente
-app.post('/clientes', (req, res) => {
-    const { nome, cpf, email, telefone, endereco } = req.body;
+// listar todos os clientes ou buscar por CPF
+app.get('/clientes', (req , res) => {
+    const { cpf } = req.query.cpf || ''; // Pega o CPF da query string, se existir
 
-    if (!nome || !cpf) {
-        return res.status(400).send('Nome e CPF são obrigatórios.');
-    }
+  if (cpf){
+      const query = `SELECT * FROM clientes WHERE cpf = ?´;`
+      db.all(query, [`%${cpf}%`], (err, rows) => {
+                  if (err) {
+                      console.error(err);
+                      return res.status(500).json({ message: 'Erro ao buscar clientes.' });
+                  }
+                  res.json(rows);  // Retorna os clientes encontrados ou um array vazio
+              });
+          } else {
+              // Se CPF não foi passado, retorna todos os clientes
+              const query = `SELECT * FROM clientes`;
 
-    const query = `INSERT INTO clientes (nome, cpf, email, telefone, endereco) VALUES (?, ?, ?, ?, ?)`;
-    db.run(query, [nome, cpf, email, telefone, endereco], function (err) {
-        if (err) {
-            return res.status(500).send('Erro ao cadastrar cliente.');
-        }
-        res.status(201).send({ id: this.lastID, message: 'Cliente cadastrado com sucesso.' });
-    });
-});
+              db.all(query, (err, rows) => {
+                  if (err) {
+                      console.error(err);
+                      return res.status(500).json({ message: 'Erro ao buscar clientes.' });
+                  }
+                  res.json(rows);  // Retorna todos os clientes
+              });
+          }
+      });
 
-// Listar clientes
-// Endpoint para listar todos os clientes ou buscar por CPF
-app.get('/clientes', (req, res) => {
-    const cpf = req.query.cpf || '';  // Recebe o CPF da query string (se houver)
-
-    if (cpf) {
-        // Se CPF foi passado, busca clientes que possuam esse CPF ou parte dele
-        const query = `SELECT * FROM clientes WHERE cpf LIKE ?`;
-
-        db.all(query, [`%${cpf}%`], (err, rows) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: 'Erro ao buscar clientes.' });
-            }
-            res.json(rows);  // Retorna os clientes encontrados ou um array vazio
-        });
-    } else {
-        // Se CPF não foi passado, retorna todos os clientes
-        const query = `SELECT * FROM clientes`;
-
-        db.all(query, (err, rows) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: 'Erro ao buscar clientes.' });
-            }
-            res.json(rows);  // Retorna todos os clientes
-        });
-    }
-});
-
-
-
-// Atualizar cliente
+// atualizar cliente
 app.put('/clientes/cpf/:cpf', (req, res) => {
     const { cpf } = req.params;
     const { nome, email, telefone, endereco } = req.body;
@@ -110,15 +93,7 @@ app.put('/clientes/cpf/:cpf', (req, res) => {
 });
 
 
-
-
-
-// Teste para verificar se o servidor está rodando
-app.get('/', (req, res) => {
-    res.send('Servidor está rodando e tabelas criadas!');
-});
-
-// Iniciando o servidor
+// iniciar o servidor na porta especificada
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
