@@ -1,3 +1,16 @@
+let campoCpf = document.querySelector(".cpf")
+
+campoCpf.addEventListener("keypress", ()=>{    
+    let tamanhoCampo = campoCpf.value.length
+    if(tamanhoCampo == 3 || tamanhoCampo == 7){
+        campoCpf.value += "."
+    }else if(tamanhoCampo == 11){
+        campoCpf.value += "-"
+    }
+
+})
+
+
 async function cadastrarCliente(event) {
     event.preventDefault();
 
