@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento - Fornecedor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fornecedor.css">
+    <script src="fornecedor.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho com logo -->
+    <header>
+        <img src="imagens/logo.png" alt="ice" class="logo">
+        <h2>Sistema de controle de estoque</h2>
+    </header>
+
+    <!-- Menu de navegação superior -->
+    <nav>
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn">Produto</a>
+            <a href="#" class="nav-btn">Cliente</a>
+            <a href="#" class="nav-btn">Funcionário</a>
+            <a href="#" class="nav-btn">Fornecedor</a>
+        </div>
+    </nav>
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <!-- Formulário de Fornecedor -->
+            <div class="form-container">
+                <h2 class="form-title">Fornecedor</h2>
+                <form action="#" method="post" id="fornecedor-form">
+                     <div class="form-group">
+                        <label for="cnpj">CNPJ:</label>
+                        <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeCliente">Nome:</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome da empresa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoriaFornecedor">Categoria:</label>
+                        <div class="dropdown" style="flex: 1;">
+                            <select id="categoriaFornecedor" name="categoriaFornecedor">
+                                <option value="">Selecione uma categoria</option>
+                                <option value="cat1">Acompanhamentos</option>
+                                <option value="cat2">Limpeza</option>
+                                <option value="cat3">Sorvetes</option>
+                                <option value="cat4">Caldas</option>
+                            </select>
+                        </div>
+                    <div class="form-group">
+                        <label for="emailCliente">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Digite o E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefoneCliente">Telefone:</label>
+                        <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
+                    </div>
+                    <!-- Botão Cadastrar dentro do formulário -->
+                    <div class="full-box">
+                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarFornecedor(event)">
+                        <input type="reset" value="Limpar" class="alinhaBtns">
+                        <input type="button" value="Atualizar Fornecedor" class="alinhaBtns" onclick="atualizarFornecedor(); limpaFornecedor();" />
+                    </div>
+                    </div>
+                </form>
+                <h2>Listagem de Fornecedores</h2>
+                    <button type="button" onclick="listarFornecedor()" class="listaBtns">Listar Fornecedore</button>
+                    
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Endereço</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-clientes">
+                            <!-- Linhas serão preenchidas pelo JavaScript -->
+                        </tbody>
+                    </table>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+    <div class="footer-section company-info">
+    <div class="paia">
+            <img src="imagens/paia.png" alt="empresa" class="paia">
+        </div>
+    <h3>PAIA Sistems</h3>
+    <p>Soluções inteligentes para controle de estoque</p>
+    </div>
+
+    <div class="footer-section contact">
+    <h4>Contato</h4>
+    <p><i class="location-icon"></i> Av. Tecnologia, 1500 - Centro</p>
+    <p><i class="phone-icon"></i> (45) 3456-7890</p>
+    <p><i class="email-icon"></i> paia@paiasistems.com.br</p>
+    </div>
+
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2025 PAIA Sistems - Todos os direitos reservados</p>
+    <div class="footer-bottom-links">
+    <a href="#">Política de Privacidade</a>
+    <span class="separator">|</span>
+    <a href="#">Termos de Uso</a>
+    </div>
+    </div>
+    </footer>
+</body>
+</html>
