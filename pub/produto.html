@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento - Produto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="produto.css">
+    <script src="produto.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho com logo -->
+    <header>
+        <img src="imagens/logo.png" alt="ice" class="logo">
+        <h2>Sistema de controle de estoque</h2>
+    </header>
+
+    <!-- Menu de navegação superior -->
+    <nav>
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn">Produto</a>
+            <a href="#" class="nav-btn">Cliente</a>
+            <a href="#" class="nav-btn">Funcionário</a>
+            <a href="#" class="nav-btn">Fornecedor</a>
+        </div>
+    </nav>
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <!-- Formulário de produto -->
+            <div class="form-container">
+                <h2 class="form-title">Produto</h2>
+                <form action="#" method="post" id="produto-form">
+                    <div class="form-group">
+                        <label for="nomeProduto">Nome:</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>
+                    </div>
+                    <div class="form-group">
+                            <label for="tipo">Classificação:</label>
+                            <div class="dropdown" style="flex: 1;">
+                                <select id="tipo" name="tipo">
+                                    <option value="">Selecione o tipo de produto</option>
+                                    <option value="tipo1">Sorvetes</option>
+                                    <option value="tipo2">Picolés</option>
+                                    <option value="tipo3">Caldas</option>
+                                    <option value="tipo4">Adicionais</option>
+                                    <option value="tipo5">Recipientes</option>
+                                    <option value="tipo6">Limpeza</option>
+                                    <option value="tipo7">Outros</option>
+                                </select>
+                            </div>
+                    </div>
+                   <div class="form-group">
+                            <label for="fornecedora">Fornecedora:</label>
+                            <div class="dropdown" style="flex: 1;">
+                                <select id="fornecedora" name="fornecedora">
+                                    <option value="">Selecione um fornecedor</option>
+                                    <option value="for1">Fornecedor 1</option>
+                                    <option value="for2">Fornecedor 2</option>
+                                    <option value="for3">Fornecedor 3</option>
+                                </select>
+                            </div>
+                    </div>
+                    <!-- Botão Cadastrar dentro do formulário -->
+                    <div class="full-box">
+                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarProduto(event)">
+                        <input type="reset" value="Limpar" class="alinhaBtns">
+                        <input type="button" value="Atualizar Fornecedor" class="alinhaBtns" onclick="atualizarProduto(); limpaProduto();" />
+                    </div>
+                    </div>
+                </form>
+                <h2>Listagem de Produtos</h2>
+                    <button type="button" onclick="listarProduto()" class="listaBtns">Listar Produtos</button>
+                    
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Fornecedor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-fornecedor">
+                            <!-- Linhas serão preenchidas pelo JavaScript -->
+                        </tbody>
+                    </table>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="footer-container">
+    <div class="footer-section company-info">
+    <div class="paia">
+            <img src="imagens/paia.png" alt="empresa" class="paia">
+        </div>
+    <h3>PAIA Sistems</h3>
+    <p>Soluções inteligentes para controle de estoque</p>
+    </div>
+
+    <div class="footer-section contact">
+    <h4>Contato</h4>
+    <p><i class="location-icon"></i> Av. Tecnologia, 1500 - Centro</p>
+    <p><i class="phone-icon"></i> (45) 3456-7890</p>
+    <p><i class="email-icon"></i> paia@paiasistems.com.br</p>
+    </div>
+
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2025 PAIA Sistems - Todos os direitos reservados</p>
+    <div class="footer-bottom-links">
+    <a href="#">Política de Privacidade</a>
+    <span class="separator">|</span>
+    <a href="#">Termos de Uso</a>
+    </div>
+    </div>
+    </footer>
+</body>
+</html>
