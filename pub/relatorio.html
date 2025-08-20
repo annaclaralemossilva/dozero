@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html land="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realiação de vendas</title>
+    <link rel="stylesheet" href="relatorio.css">
+    <script src="relatorio.js"></script>
+</head>
+<body onload="buscarProdutos()">
+<header>
+    <div class="Cabeçalho">
+        <h2>Controle de vendas</h2>
+        <nav>
+            <ul>
+                <li><a href="produto.html">Produtos</a></li>
+                <li><a href="cliente.html">Clientes</a></li>
+                <li><a href="fornecedor.html">Fornecedores</a></li>
+                <li><a href="vendas.html">Vendas</a></li>
+                <li><a href="relatorio.html">relatorios</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="main-container">
+    <h1>RelatÓrios de Vendas</h1>
+
+    <div class="filters">
+        <label for="cpf">CPF do Cliente:</label>
+        <input type="text" id="cpf" placeholder="digite o CPF">
+
+        <label for="produto">produto:</label>
+        <input type="text" id="produto" placeholder="digite o nome do produto">
+
+        <label for="datainicio">Data Inicio:</label>
+        <input type="date" id="datainicio">
+
+        <label for="datafim">Data Fim:</label>
+        <input type="date" id="datafim">
+
+        <button onclick="buscaRelatorio()" class="alinhaBtns">Buscar</button>
+    </div>
+
+    <h3>RelatÓrio de Vendas</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-vendas">
+
+        </tbody>
+    </table>
+</div>
+
+
+<footer>
+    <p>©2025</p>
+</footer>
+</body>
+</html>
