@@ -1,30 +1,35 @@
 <!DOCTYPE html>
-<html land="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realiação de vendas</title>
-    <link rel="stylesheet" href="relatorio.css">
-    <script src="relatorio.js"></script>
+    <title>Sistema de Gerenciamento - Produto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="produto.css">
+    <script src="produto.js"></script>
 </head>
 <body onload="buscarProdutos()">
-<header>
-    <div class="Cabeçalho">
-        <h2>Controle de vendas</h2>
-        <nav>
-            <ul>
-                <li><a href="produto.html">Produtos</a></li>
-                <li><a href="cliente.html">Clientes</a></li>
-                <li><a href="fornecedor.html">Fornecedores</a></li>
-                <li><a href="vendas.html">Vendas</a></li>
-                <li><a href="relatorio.html">relatorios</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
 
-<div id="main-container">
-    <h1>RelatÓrios de Vendas</h1>
+<!-- Cabeçalho com logo -->
+    <header>
+        <img src="imagens/logo.png" alt="ice" class="logo">
+        <h2>Sistema de controle de estoque</h2>
+    </header>
+
+    <!-- Menu de navegação superior -->
+    <nav>
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn">Produto</a>
+            <a href="#" class="nav-btn">Cliente</a>
+            <a href="#" class="nav-btn">Funcionário</a>
+            <a href="#" class="nav-btn">Fornecedor</a>
+        </div>
+    </nav>
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+    <h1>Relatórios de Vendas</h1>
 
     <div class="filters">
         <label for="cpf">CPF do Cliente:</label>
@@ -42,7 +47,7 @@
         <button onclick="buscaRelatorio()" class="alinhaBtns">Buscar</button>
     </div>
 
-    <h3>RelatÓrio de Vendas</h3>
+    <h3>Relatório de Vendas</h3>
     <table>
         <thead>
             <tr>
@@ -61,7 +66,23 @@
 
 
 <footer>
-    <p>©2025</p>
+    <!-- Cabeçalho com logo -->
+    <header>
+        <img src="imagens/logo.png" alt="ice" class="logo">
+        <h2>Sistema de controle de estoque</h2>
+    </header>
+
+    <!-- Menu de navegação superior -->
+    <nav>
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn">Produto</a>
+            <a href="#" class="nav-btn">Cliente</a>
+            <a href="#" class="nav-btn">Funcionário</a>
+            <a href="#" class="nav-btn">Fornecedor</a>
+        </div>
+    </nav>
+        <!-- Conteúdo principal -->
+        <div class="main-content">
 </footer>
 </body>
 </html>
