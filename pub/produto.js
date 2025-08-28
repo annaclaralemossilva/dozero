@@ -1,27 +1,13 @@
-let campoCnpj = document.querySelector(".cnpj")
-
-campoCnpj.addEventListener("keypress", ()=>{    
-    let tamanhoCampo = campoCnpj.value.length
-    if(tamanhoCampo == 3 || tamanhoCampo == 7){
-        campoCnpj.value += "."
-    }else if(tamanhoCampo == 11){
-        campoCnpj.value += "-"
-    }
-
-})
-
-
 async function cadastrarProduto(event) {
     event.preventDefault();
 
-    let nome_produto = document.getElementById("nome").value;
-
     const produto = {
-        nome: nome_produto,
-        telefone: document.getElementById("telefone").value,
-        email: document.getElementById("email").value,
-        cnpj: document.getElementById("cnpj").value,
-        endereco: document.getElementById("endereco").value
+        nome: document.getElementById("nome").value,
+        preco: parseFloat(document.getElementById("preco").value),
+        quantidade_estoque: parseInt(document.getElementById("quantidade_estoque").value),
+        descricao: document.getElementById("descricao").value,
+        tipo: document.getElementById("tipo").value,
+        fornecedor_id: parseInt(document.getElementById("fornecedor").value)
     };
 
     try {
@@ -35,8 +21,8 @@ async function cadastrarProduto(event) {
 
         const result = await response.json();
         if (response.ok) {
-            alert("produto cadastrado com sucesso!");
-            document.getElementById("produtor-form").reset();
+            alert("Produto cadastrado com sucesso!");
+            document.getElementById("produto-form").reset();
         } else {
             alert(`Erro: ${result.message}`);
         }
@@ -45,88 +31,65 @@ async function cadastrarProduto(event) {
         alert("Erro ao cadastrar produto.");
     }
 }
-// Função para listar todos os produto ou buscar produto por CNPJ
-async function listarproduto() {
-    const cnpj = document.getElementById('cnpj').value.trim();  // Pega o valor do CNPJ digitado no input
 
-    let url = '/produto';  // URL padrão para todos os produto
 
-    if (cnpj) {
-        // Se CNPJ foi digitado, adiciona o parâmetro de consulta
-        url += `?cnpj=${cnpj}`;
-    }
+// Função para buscar fornecedores
+function buscarFornecedores() {
+    fetch('/buscar-fornecedores')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao buscar fornecedores');
+            }
+            return response.json();
+        })
+        .then(fornecedores => {
+            const select = document.getElementById('fornecedor');
+            // Limpa as opções existentes
+            select.innerHTML = '<option value="">Selecione um fornecedor</option>';
+            fornecedores.forEach(fornecedor => {
+                const option = document.createElement('option');
+                option.value = fornecedor.id; // Usa o id como valor
+                option.textContent = fornecedor.nome; // Nome do serviço exibido
+                select.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os fornecedores:', error);
+        });
+}
 
+
+// Função para listar todos os produto
+async function listarProdutos() {
+    
     try {
-        const response = await fetch(url);
-        const produtor = await response.json();
+        const response = await fetch('/produto');
+        const produtos = await response.json();
 
-        const tabela = document.getElementById('tabela-produto');
+        const tabela = document.getElementById('tabela-produtos');
         tabela.innerHTML = ''; // Limpa a tabela antes de preencher
 
-        if (produto.length === 0) {
+        if (produtos.length === 0) {
             // Caso não encontre produto, exibe uma mensagem
-            tabela.innerHTML = '<tr><td colspan="6">Nenhum produto encontrado.</td></tr>';
+            tabela.innerHTML = '<tr><td colspan="4">Nenhum produto encontrado.</td></tr>';
         } else {
-            produto.forEach(produto => {
+            produtos.forEach(produto => {
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
                     <td>${produto.id}</td>
                     <td>${produto.nome}</td>
-                    <td>${produto.cnpj}</td>
-                    <td>${produto.email}</td>
-                    <td>${produto.telefone}</td>
-                    <td>${produto.endereco}</td>
+                    <td>R$ ${produto.preco.toFixed(2)}</td>
+                    <td>${produto.quantidade_estoque}</td>
                 `;
                 tabela.appendChild(linha);
             });
         }
     } catch (error) {
-        console.error('Erro ao listar produto:', error);
-    }
-}
-// Função para atualizar as informações do produto
-async function atualizarProduto() {
-    const nome = document.getElementById('nome').value;
-    const cnpj = document.getElementById('cnpj').value;
-    const email = document.getElementById('email').value;
-    const telefone = document.getElementById('telefone').value;
-    const endereco = document.getElementById('endereco').value;
-
-    const produtoAtualizado = {
-        nome,
-        email,
-        telefone,
-        endereco,
-        cnpj
-    };
-
-    try {
-        const response = await fetch(`/produto/cnpj/${cnpj}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(produtoAtualizado)
-        });
-
-        if (response.ok) {
-            alert('produto atualizado com sucesso!');
-        } else {
-            const errorMessage = await response.text();
-            alert('Erro ao atualizar produto: ' + errorMessage);
-        }
-    } catch (error) {
-        console.error('Erro ao atualizar produto:', error);
-        alert('Erro ao atualizar produto.');
+        console.error('Erro ao listar produtos:', error);
     }
 }
 
-
-async function limpaProduto() {
-    document.getElementById('nome').value = '';
-    document.getElementById('cnpj').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('telefone').value = '';
-    document.getElementById('endereco').value = '';
-
-}
+//Carrega os fornecedores ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    buscarFornecedores();
+});
