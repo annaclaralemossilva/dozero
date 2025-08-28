@@ -1,0 +1,123 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Sour Gummy", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 377;
+    font-style: normal;
+}
+
+/* Estilizando o corpo da página */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff6fb;
+}
+
+/* Container principal */
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+/* Título principal */
+h1 {
+    font-size:30px;
+    margin-bottom:10px;
+    color: #3a2618;
+    font-weight: bold;
+}
+
+/* Área do logotipo */
+.logo {
+    margin: 20px auto 40px;
+    width: 300px;
+    height: 250px;
+    position: relative;
+    transition: 0.3s;
+}
+.logo:hover {
+    width: 320px;
+    height: 270px;
+}
+
+
+/* Área do formulário */
+.form-area {
+    margin-top: 20px;
+}
+
+/* Estilo do campo de texto */
+label {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #3a2618;
+}
+
+/* Estilizando o campo de input */
+.input-container {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.input-arrow {
+    font-size: 30px;
+    color: #3a2618;
+    margin-right: 5px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #fdb4ce;
+    border-radius: 5px;
+}
+
+/* Botão de entrar */
+.btn-entrar {
+    padding: 12px 50px;
+    font-size: 1.2rem;
+    background-color: white;
+    color: #3a2618;
+    border: 2px solid #fdb4ce;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Efeito de hover no botão */
+.btn-entrar:hover {
+    background-color: #f8cfdd;
+}
+
+/* Efeito da sombra rosa sob o botão */
+.btn-container {
+    position: relative;
+    display: inline-block;
+}
+.btn-container a{
+    text-decoration: none;
+    color: #3a2618;
+}
+
+.btn-shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fdb4ce;
+    border-radius: 30px;
+    top: 5px;
+    left: 0;
+    z-index: -1;
+}
