@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gerenciamento - Cliente</title>
+    <title>Sistema de Gerenciamento - Funcionario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cliente.css">
-    <script src="cliente.js"></script>
+    <link rel="stylesheet" href="funcionario.css">
+    <script src="funcionario.js"></script>
 </head>
 <body>
     <!-- Cabeçalho com logo -->
@@ -16,22 +16,23 @@
         <img src="imagens/logo.png" alt="ice" class="logo">
         <h2>Sistema de controle de estoque</h2>
     </header>
-
     <!-- Menu de navegação superior -->
     <nav>
         <div class="nav-buttons">
-            <a href="#" class="nav-btn">Produto</a>
-            <a href="#" class="nav-btn">Cliente</a>
-            <a href="#" class="nav-btn">Funcionário</a>
-            <a href="#" class="nav-btn">Fornecedor</a>
+            <a href="produto.html" class="nav-btn">Produto</a>
+            <a href="cliente.html" class="nav-btn">Cliente</a>
+            <a href="funcionario.html" class="nav-btn">Funcionário</a>
+            <a href="fornecedor.html" class="nav-btn">Fornecedor</a>
+            <a href="venda.html" class="nav-btn">Vendas</a>
+            <a href="relatorio.html" class="nav-btn">Relatórios</a>
         </div>
     </nav>
         <!-- Conteúdo principal -->
         <div class="main-content">
             <!-- Formulário de funcionario -->
             <div class="form-container">
-                <h2 class="form-title">funcionario</h2>
-                <form action="#" method="post" id="cliente-form">
+                <h2 class="form-title">Funcionário</h2>
+                <form action="#" method="post" id="funcionario-form">
                     <div class="form-group">
                         <label for="nomeCliente">Nome:</label>
                         <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
@@ -49,28 +50,36 @@
                         <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone" required>
                     </div>
                     <div class="form-group">
-                        <label for="endereco">Endereço:</label>
-                        <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
+                        <label for="endereco">Data de nascimento:</label>
+                        <input type="date" id="data_nascimento" name="data_nascimento" placeholder="Digite a data de nascimento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Data de contratação:</label>
+                        <input type="date" id="data_contratacao" name="data_contratacao" placeholder="Digite a data de contratação" required>
                     </div>
                     <div class="form-group">
                         <label for="endereco">Endereço:</label>
                         <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
                     </div>
                     <div class="form-group">
-                        <label for="endereco">Endereço:</label>
-                        <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
+                            <label for="funcao">Função:</label>
+                            <div class="dropdown" style="flex: 1;">
+                                <select id="funcao" name="funcao" required>
+                                    <option value="">Selecione a função</option>
+                                </select>
+                            </div>
                     </div>
                     <!-- Botão Cadastrar dentro do formulário -->
                     <div class="full-box">
-                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarfuncionario(event)">
+                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarFuncionario(event)">
                         <input type="reset" value="Limpar" class="alinhaBtns">
-                        <input type="button" value="Atualizar Cliente" class="alinhaBtns" onclick="atualizarfuncionario(); limpaCliente();" />
+                        <input type="button" value="Atualizar Cliente" class="alinhaBtns" onclick="atualizarFuncionario(); limpaFuncionario();" />
                     </div>
                     </div>
                 </form>
                 <h2>Listagem de funcionarios</h2>
-                    <button type="button" onclick="listarfuncionario()" class="listaBtns">Listar Funcionarios</button>
-                    
+                    <button type="button" onclick="listarFuncionario()" class="listaBtns">Listar Funcionarios</button>
+
                     <table border="1">
                         <thead>
                             <tr>
@@ -79,7 +88,7 @@
                                 <th>CPF</th>
                                 <th>Email</th>
                                 <th>Telefone</th>
-                                <th>Endereço</th>
+                                <th>Função</th>
                             </tr>
                         </thead>
                         <tbody id="tabela-funcionarios">
@@ -87,7 +96,7 @@
                         </tbody>
                     </table>
             </div>
-            
+
         </div>
     </div>
 
