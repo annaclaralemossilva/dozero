@@ -1,23 +1,8 @@
-let campoCnpj = document.querySelector(".cnpj")
-
-campoCnpj.addEventListener("keypress", ()=>{    
-    let tamanhoCampo = campoCnpj.value.length
-    if(tamanhoCampo == 3 || tamanhoCampo == 7){
-        campoCnpj.value += "."
-    }else if(tamanhoCampo == 11){
-        campoCnpj.value += "-"
-    }
-
-})
-
-
 async function cadastrarFornecedor(event) {
     event.preventDefault();
 
-    let nome_fornecedor = document.getElementById("nome").value;
-
     const fornecedor = {
-        nome: nome_fornecedor,
+        nome: document.getElementById("nome").value,
         telefone: document.getElementById("telefone").value,
         email: document.getElementById("email").value,
         cnpj: document.getElementById("cnpj").value,
@@ -25,7 +10,7 @@ async function cadastrarFornecedor(event) {
     };
 
     try {
-        const response = await fetch('/fornecedor', {
+        const response = await fetch('/fornecedores', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,32 +27,32 @@ async function cadastrarFornecedor(event) {
         }
     } catch (err) {
         console.error("Erro na solicitação:", err);
-        alert("Erro ao cadastrar Fornecedor.");
+        alert("Erro ao cadastrar fornecedor.");
     }
 }
-// Função para listar todos os fornecedor ou buscar fornecedor por CNPJ
-async function listarFornecedor() {
+// Função para listar todos os fornecedores ou buscar fornecedores /por CNPJ
+async function listarFornecedores() {
     const cnpj = document.getElementById('cnpj').value.trim();  // Pega o valor do CNPJ digitado no input
 
-    let url = '/fornecedor';  // URL padrão para todos os fornecedor
+    let url = '/fornecedores';  // URL padrão para todos os fornecedores
 
     if (cnpj) {
-        // Se CNPJ foi digitado, adiciona o parâmetro de consulta
+        // Se Cnpj foi digitado, adiciona o parâmetro de consulta
         url += `?cnpj=${cnpj}`;
     }
 
     try {
         const response = await fetch(url);
-        const fornecedor = await response.json();
+        const fornecedores = await response.json();
 
-        const tabela = document.getElementById('tabela-fornecedor');
+        const tabela = document.getElementById('tabela-fornecedores');
         tabela.innerHTML = ''; // Limpa a tabela antes de preencher
 
-        if (fornecedor.length === 0) {
-            // Caso não encontre fornecedor, exibe uma mensagem
+        if (fornecedores.length === 0) {
+            // Caso não encontre fornecedores, exibe uma mensagem
             tabela.innerHTML = '<tr><td colspan="6">Nenhum fornecedor encontrado.</td></tr>';
         } else {
-            fornecedor.forEach(fornecedor => {
+            fornecedores.forEach(fornecedor => {
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
                     <td>${fornecedor.id}</td>
@@ -81,7 +66,7 @@ async function listarFornecedor() {
             });
         }
     } catch (error) {
-        console.error('Erro ao listar fornecedor:', error);
+        console.error('Erro ao listar fornecedores:', error);
     }
 }
 // Função para atualizar as informações do fornecedor
@@ -101,7 +86,7 @@ async function atualizarFornecedor() {
     };
 
     try {
-        const response = await fetch(`/fornecedor/cnpj/${cnpj}`, {
+        const response = await fetch(`/fornecedores/cnpj/${cnpj}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
