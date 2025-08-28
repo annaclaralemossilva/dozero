@@ -331,7 +331,7 @@ color: var(--cor-rosa);
     margin:auto;
 
 }
- 
+
 /* Responsividade */
 @media (max-width: 768px) {
     .content-container {
