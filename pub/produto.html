@@ -20,10 +20,13 @@
     <!-- Menu de navegação superior -->
     <nav>
         <div class="nav-buttons">
-            <a href="#" class="nav-btn">Produto</a>
-            <a href="#" class="nav-btn">Cliente</a>
-            <a href="#" class="nav-btn">Funcionário</a>
-            <a href="#" class="nav-btn">Fornecedor</a>
+            <a href="produto.html" class="nav-btn">Produto</a>
+            <a href="cliente.html" class="nav-btn">Cliente</a>
+            <a href="funcionario.html" class="nav-btn">Funcionário</a>
+            <a href="fornecedor.html" class="nav-btn">Fornecedor</a>
+            <a href="funcao.html" class="nav-btn">Função</a>
+            <a href="vendas.html" class="nav-btn">Vendas</a>
+            <a href="relatorio.html" class="nav-btn">Relatórios</a>
         </div>
     </nav>
         <!-- Conteúdo principal -->
@@ -37,28 +40,36 @@
                         <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>
                     </div>
                     <div class="form-group">
+                        <label for="preco">Preço unitário:</label>
+                        <input type="number" id="preco" name="preco" placeholder="Digite o preço" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantidade_estoque">Quantidade em Estoque:</label>
+                        <input type="number" id="quantidade_estoque" name="quantidade_estoque" placeholder="Quantidade em estoque" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantidade_estoque">Descrição:</label>
+                        <textarea type="number" id="descricao" name="descricao" placeholder="Descrição" required></textarea>
+                    </div>
+                    <div class="form-group">
                             <label for="tipo">Classificação:</label>
                             <div class="dropdown" style="flex: 1;">
-                                <select id="tipo" name="tipo">
+                                <select id="tipo" name="tipo" required>
                                     <option value="">Selecione o tipo de produto</option>
-                                    <option value="tipo1">Sorvetes</option>
-                                    <option value="tipo2">Picolés</option>
-                                    <option value="tipo3">Caldas</option>
-                                    <option value="tipo4">Adicionais</option>
-                                    <option value="tipo5">Recipientes</option>
-                                    <option value="tipo6">Limpeza</option>
-                                    <option value="tipo7">Outros</option>
+                                    <option value="Sorvetes">Sorvetes</option>
+                                    <option value="Caldas">Caldas</option>
+                                    <option value="Adicionais">Adicionais</option>
+                                    <option value="Recipientes">Recipientes</option>
+                                    <option value="Limpeza">Limpeza</option>
+                                    <option value="Outros">Outros</option>
                                 </select>
                             </div>
                     </div>
                    <div class="form-group">
-                            <label for="fornecedora">Fornecedora:</label>
+                            <label for="fornecedor">Fornecedor:</label>
                             <div class="dropdown" style="flex: 1;">
-                                <select id="fornecedora" name="fornecedora">
+                                <select id="fornecedor" name="fornecedor" required>
                                     <option value="">Selecione um fornecedor</option>
-                                    <option value="for1">Fornecedor 1</option>
-                                    <option value="for2">Fornecedor 2</option>
-                                    <option value="for3">Fornecedor 3</option>
                                 </select>
                             </div>
                     </div>
@@ -66,28 +77,28 @@
                     <div class="full-box">
                         <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarProduto(event)">
                         <input type="reset" value="Limpar" class="alinhaBtns">
-                        <input type="button" value="Atualizar Fornecedor" class="alinhaBtns" onclick="atualizarProduto(); limpaProduto();" />
+                        <input type="button" value="Atualizar Produto" class="alinhaBtns" onclick="atualizarProduto(); limpaProduto();" />
                     </div>
                     </div>
                 </form>
                 <h2>Listagem de Produtos</h2>
-                    <button type="button" onclick="listarProduto()" class="listaBtns">Listar Produtos</button>
-                    
+                    <button type="button" onclick="listarProdutos()" class="listaBtns">Listar Produtos</button>
+
                     <table border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Tipo</th>
-                                <th>Fornecedor</th>
+                                <th>Preço</th>
+                                <th>Quant. Estoque</th>
                             </tr>
                         </thead>
-                        <tbody id="tabela-fornecedor">
+                        <tbody id="tabela-produtos">
                             <!-- Linhas serão preenchidas pelo JavaScript -->
                         </tbody>
                     </table>
             </div>
-            
+
         </div>
     </div>
 
