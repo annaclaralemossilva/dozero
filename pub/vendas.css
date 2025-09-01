@@ -84,13 +84,6 @@ nav {
     display: inline-block;
 }
 
-.nav-btn:hover {
-    background-color: #8B5A2B;
-}
-
-.nav-btn.active {
-    background-color: #654321;
-}
 
 /* Layout principal de conteúdo */
 .content-container {
@@ -117,7 +110,6 @@ nav {
     border: 5px solid var(--cor-rosa);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 30px;
 }
 
 .form-title {
@@ -130,14 +122,11 @@ nav {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    padding: 3px;
 }
 
-
 .form-group label {
-    width: 90px;
+    width: 150px;
     font-weight: bold;
-
 }
 
 .form-group input, .form-group select, .form-group textarea {
@@ -148,8 +137,26 @@ nav {
 }
 
 .form-group textarea {
-    min-height: 180px;
+    min-height: 150px;
     resize: vertical;
+}
+
+/* Dropdown do select */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
 }
 
 .alinhaBtns {
@@ -161,6 +168,7 @@ nav {
     margin: 5px;
     gap: 2px; 
     margin-top: 15px;
+    margin-bottom: 20px;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s;
@@ -176,7 +184,7 @@ nav {
     border: 3px solid var(--cor-rosa);
     padding: 10px;
     width: 40%;
-    margin: 10px 0;
+    margin: 30px 0;
     gap: 20px; 
     margin-top: 25px;
     border-radius: 25px;
@@ -190,12 +198,13 @@ table {
     width: 80%;
     border-collapse: collapse;
     margin: 20px 0;
+    text-align: center;
 }
 
 table th, table td {
     border: 1px solid var(--cor-rosa);
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
