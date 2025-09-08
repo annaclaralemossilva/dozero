@@ -135,6 +135,7 @@ header {
     transform: translateX(350px);
 }
 
+
 /* Layout principal de conteúdo */
 .content-container {
     display: flex;

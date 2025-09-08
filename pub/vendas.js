@@ -1,3 +1,19 @@
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Formatação do CPF
+    const campoCpf = document.getElementById("cpf-cliente");
+    if (campoCpf) {
+        campoCpf.addEventListener("keypress", () => {    
+            let tamanhoCampo = campoCpf.value.length;
+            if(tamanhoCampo == 3 || tamanhoCampo == 7){
+                campoCpf.value += ".";
+            }else if(tamanhoCampo == 11){
+                campoCpf.value += "-";
+            }
+        });
+    }
+});
+
 // Função para buscar cliente pelo CPF
 function buscarCliente() {
   const cpf = document.getElementById("cpf-cliente").value;
@@ -25,6 +41,8 @@ function buscarCliente() {
     .catch((error) => {
       alert(error.message);
     });
+
+
 }    
 
 // Função para buscar produto e adicioná-lo ao carrinho

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gerenciamento - Função</title>
+    <title>Sistema de Gerenciamento - Fornecedor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
@@ -17,65 +17,90 @@
         <h2>Sistema de controle de estoque</h2>
     </header>
 
-    <!-- Menu de navegação superior -->
-    <nav>
+    <!-- Menu de navegação superior (Para telas grandes) -->
+    <nav class="nav_desktop">
         <div class="nav-buttons">
             <a href="produto.html" class="nav-btn">Produto</a>
             <a href="cliente.html" class="nav-btn">Cliente</a>
             <a href="funcionario.html" class="nav-btn">Funcionário</a>
             <a href="fornecedor.html" class="nav-btn">Fornecedor</a>
-            <a href="venda.html" class="nav-btn">Vendas</a>
+            <a href="funcao.html" class="nav-btn">Função</a>
+            <a href="vendas.html" class="nav-btn">Vendas</a>
             <a href="relatorio.html" class="nav-btn">Relatórios</a>
         </div>
     </nav>
+
+    <!-- Menu retrátil (Para telas pequenas) -->
+    <div class="nav_mobile">
+        <input type="checkbox" id="menu">
+        <label for="menu"><img src="imagens/menu.png" alt="Menu" class="menu-icon"></label>
+        <nav>
+            <ul>
+                <li><a href="produto.html">Produto</a></li>
+                <li><a href="cliente.html">Cliente</a></li>
+                <li><a href="funcionario.html">Funcionário</a></li>
+                <li><a href="fornecedor.html">Fornecedor</a></li>
+                <li><a href="funcao.html">Função</a></li>
+                <li><a href="vendas.html">Vendas</a></li>
+                <li><a href="relatorio.html">Relatórios</a></li>
+            </ul>
+        </nav>
+    </div>
         <!-- Conteúdo principal -->
         <div class="main-content">
-            <!-- Formulário de Funções -->
+            <!-- Formulário de Fornecedor -->
             <div class="form-container">
-                <h2 class="form-title">Função</h2>
+                <h2 class="form-title">Fornecedor</h2>
                 <form action="#" method="post" id="fornecedor-form">
+                    <input type="hidden" id="id" name="id">
                      <div class="form-group">
-                        <label for="nomefun">Função:</label>
-                        <input type="text" id="nomefun" name="nomefun" placeholder="Digite o nome da função">
+                        <label for="cnpj">CNPJ:</label>
+                        <input type="text" id="cnpj" name="cnpj" maxlength="18" placeholder="Digite o CNPJ completo">
                     </div>
                     <div class="form-group">
-                        <label for="descricao">Descrição:</label>
-                        <textarea type="text" id="descricao" name="descricao" placeholder="Descrição" required></textarea>
+                        <label for="nomeCliente">Empresa:</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome da empresa" required>
                     </div>
                     <div class="form-group">
-                        <label for="salario">Salário:</label>
-                        <input type="number" id="salario" name="salario" placeholder="Digite o salário" required>
+                        <label for="emailCliente">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Digite o E-mail" required>
                     </div>
                     <div class="form-group">
-                        <label for="carga_horaria">Carga Horária:</label>
-                        <input type="time" id="carga_horaria" name="carga_horaria" placeholder="Digite a carga horária" required>
+                        <label for="telefoneCliente">Telefone:</label>
+                        <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço" required>
                     </div>
                     <!-- Botão Cadastrar dentro do formulário -->
                     <div class="full-box">
-                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarFuncao(event)">
+                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarFornecedor(event)">
                         <input type="reset" value="Limpar" class="alinhaBtns">
-                        <input type="button" value="Atualizar Função" class="alinhaBtns" onclick="atualizarFuncao(); limpaFuncao();" />
+                        <input type="button" value="Atualizar Fornecedor" class="alinhaBtns" onclick="atualizarFornecedor(); limpaFornecedor();" />
                     </div>
                     </div>
                 </form>
-                <h2>Listagem de Funções</h2>
-                    <button type="button" onclick="listarFuncao()" class="listaBtns">Listar Funções</button>
-
+                <h2>Listagem de Fornecedores</h2>
+                    <button type="button" onclick="listarFornecedores()" class="listaBtns">Listar Fornecedores</button>
+                    
                     <table border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Função</th>
-                                <th>Salário</th>
-                                <th>Carga Horária</th>
+                                <th>Empresa</th>
+                                <th>CNPJ</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Endereço</th>
                             </tr>
                         </thead>
-                        <tbody id="tabela-funcao">
+                        <tbody id="tabela-fornecedores">
                             <!-- Linhas serão preenchidas pelo JavaScript -->
                         </tbody>
                     </table>
             </div>
-
+            
         </div>
     </div>
 

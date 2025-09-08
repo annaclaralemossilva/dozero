@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gerenciamento - Produto</title>
+    <title>Sistema de Gerenciamento - Função</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sour+Gummy:wdth,wght@100..125,377&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="produto.css">
-    <script src="produto.js"></script>
+    <link rel="stylesheet" href="funcao.css">
+    <script src="funcao.js"></script>
 </head>
 <body>
     <!-- Cabeçalho com logo -->
@@ -48,73 +48,51 @@
     </div>
         <!-- Conteúdo principal -->
         <div class="main-content">
-            <!-- Formulário de produto -->
+            <!-- Formulário de Funções -->
             <div class="form-container">
-                <h2 class="form-title">Produto</h2>
-                <form action="#" method="post" id="produto-form">
+                <h2 class="form-title">Função</h2>
+                <form action="#" method="post" id="funcao-form">
                     <div class="form-group" style="display: none;">
                         <label for="id">ID:</label>
                         <input type="number" id="id" name="id" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="nomeProduto">Nome:</label>
-                        <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>
+                     <div class="form-group">
+                        <label for="nomefun">Função:</label>
+                        <input type="text" id="nomefun" name="nomefun" placeholder="Digite o nome da função">
                     </div>
                     <div class="form-group">
-                        <label for="preco">Preço unitário:</label>
-                        <input type="number" id="preco" name="preco" placeholder="Digite o preço" required>
+                        <label for="descricao">Descrição:</label>
+                        <textarea type="text" id="descricao" name="descricao" placeholder="Descrição" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="quantidade_estoque">Quantidade em Estoque:</label>
-                        <input type="number" id="quantidade_estoque" name="quantidade_estoque" placeholder="Quantidade em estoque" required>
+                        <label for="salario">Salário:</label>
+                        <input type="number" id="salario" name="salario" placeholder="Digite o salário" required>
                     </div>
                     <div class="form-group">
-                        <label for="quantidade_estoque">Descrição:</label>
-                        <textarea type="number" id="descricao" name="descricao" placeholder="Descrição" required></textarea>
-                    </div>
-                    <div class="form-group">
-                            <label for="tipo">Classificação:</label>
-                            <div class="dropdown" style="flex: 1;">
-                                <select id="tipo" name="tipo" required>
-                                    <option value="">Selecione o tipo de produto</option>
-                                    <option value="Sorvetes">Sorvetes</option>
-                                    <option value="Caldas">Caldas</option>
-                                    <option value="Adicionais">Adicionais</option>
-                                    <option value="Recipientes">Recipientes</option>
-                                    <option value="Limpeza">Limpeza</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
-                            </div>
-                    </div>
-                   <div class="form-group">
-                            <label for="fornecedor">Fornecedor:</label>
-                            <div class="dropdown" style="flex: 1;">
-                                <select id="fornecedor" name="fornecedor" required>
-                                    <option value="">Selecione um fornecedor</option>
-                                </select>
-                            </div>
+                        <label for="carga_horaria">Carga Horária:</label>
+                        <input type="number" id="carga_horaria" name="carga_horaria" placeholder="Digite a carga horária em horas" required>
                     </div>
                     <!-- Botão Cadastrar dentro do formulário -->
                     <div class="full-box">
-                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarProduto(event)">
+                        <input type="submit" value="Cadastrar" class="alinhaBtns" onclick="cadastrarFuncao(event)">
                         <input type="reset" value="Limpar" class="alinhaBtns">
-                        <input type="button" value="Atualizar Produto" class="alinhaBtns" onclick="atualizarProduto();" />
+                        <input type="button" value="Atualizar Função" class="alinhaBtns" onclick="atualizarFuncao(); limpaFuncao();" />
                     </div>
                     </div>
                 </form>
-                <h2>Listagem de Produtos</h2>
-                    <button type="button" onclick="listarProdutos()" class="listaBtns">Listar Produtos</button>
+                <h2>Listagem de Funções</h2>
+                    <button type="button" onclick="listarFuncao()" class="listaBtns">Listar Funções</button>
 
                     <table border="1">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>Preço</th>
-                                <th>Quant. Estoque</th>
+                                <th>Função</th>
+                                <th>Salário</th>
+                                <th>Carga Horária</th>
                             </tr>
                         </thead>
-                        <tbody id="tabela-produtos">
+                        <tbody id="tabela-funcao">
                             <!-- Linhas serão preenchidas pelo JavaScript -->
                         </tbody>
                     </table>

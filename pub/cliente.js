@@ -1,15 +1,25 @@
-let campoCpf = document.querySelector(".cpf")
 
-campoCpf.addEventListener("keypress", ()=>{    
-    let tamanhoCampo = campoCpf.value.length
-    if(tamanhoCampo == 3 || tamanhoCampo == 7){
-        campoCpf.value += "."
-    }else if(tamanhoCampo == 11){
-        campoCpf.value += "-"
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Configura o formulário
+    const form = document.getElementById('cliente-form');
+    if (form) {
+        form.addEventListener('submit', cadastrarCliente);
     }
 
-})
-
+    // Formatação do CPF
+    const campoCpf = document.getElementById("cpf");
+    if (campoCpf) {
+        campoCpf.addEventListener("keypress", () => {    
+            let tamanhoCampo = campoCpf.value.length;
+            if(tamanhoCampo == 3 || tamanhoCampo == 7){
+                campoCpf.value += ".";
+            }else if(tamanhoCampo == 11){
+                campoCpf.value += "-";
+            }
+        });
+    }
+});
 
 async function cadastrarCliente(event) {
     event.preventDefault();
@@ -69,6 +79,8 @@ async function listarClientes() {
         } else {
             clientes.forEach(cliente => {
                 const linha = document.createElement('tr');
+                linha.style.cursor = 'pointer';
+                linha.onclick = () => selecionarCliente(cliente.nome, cliente.cpf, cliente.email, cliente.telefone, cliente.endereco);
                 linha.innerHTML = `
                     <td>${cliente.id}</td>
                     <td>${cliente.nome}</td>
@@ -129,4 +141,13 @@ async function limpaCliente() {
     document.getElementById('telefone').value = '';
     document.getElementById('endereco').value = '';
 
+}
+
+// Função para selecionar cliente da tabela para edição
+function selecionarCliente(nome, cpf, email, telefone, endereco) {
+    document.getElementById("nome").value = nome;
+    document.getElementById("cpf").value = cpf;
+    document.getElementById("email").value = email;
+    document.getElementById("telefone").value = telefone;
+    document.getElementById("endereco").value = endereco;
 }

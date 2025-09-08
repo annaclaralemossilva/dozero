@@ -9,11 +9,12 @@
     font-style: normal;
 }
 
-.logo{
+.logo {
     height: 70px;
     width: 80px;
 
 }
+
 /* Cores principais */
 :root {
     --cor-rosa: #ffcce6;
@@ -34,35 +35,21 @@ body {
 
 /* Cabeçalho */
 header {
-    background:var(--cor-rosa);
+    background: var(--cor-rosa);
     padding: 10px;
-    color:var(--cor-texto);
+    color: var(--cor-texto);
     text-align: center;
     position: relative;
 }
 
 
-/* Menu de navegação */
-nav {
-    background-color: var(--cor-creme);
+/* Menu de Navegação Desktop (para telas grandes) */
+.nav_desktop {
     display: flex;
     justify-content: space-between;
+    background-color: var(--cor-creme);
     padding: 10px;
     border-bottom: 1px solid var(--cor-borda);
-}
-
-.menu-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 30px;
-}
-
-.menu-icon span {
-    height: 3px;
-    width: 100%;
-    background-color: var(--cor-texto);
-    margin: 2px 0;
 }
 
 .nav-buttons {
@@ -84,12 +71,69 @@ nav {
     display: inline-block;
 }
 
-.nav-btn:hover {
-    background-color: #8B5A2B;
+/* Menu retrátil (para telas pequenas) */
+.nav_mobile {
+    position: relative;
+    display: none; /* Escondemos por padrão */
 }
 
-.nav-btn.active {
-    background-color: #654321;
+.nav_mobile input[type="checkbox"] {
+    display: none;
+}
+
+.nav_mobile label {
+    position: fixed; /* Fixa o ícone no canto superior direito */
+    top: 10px;  /* Distância do topo */
+    left: 10px; /* Distância da direita */
+    z-index: 100; /* Garante que o ícone fique acima do conteúdo */
+}
+
+.nav_mobile img.menu-icon {
+    width: 50px; /* Tamanho reduzido do ícone */
+    height: auto;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Suaviza o efeito de transição */
+}
+
+/* Quando o menu está aberto, o ícone pode mudar (exemplo de rotação ou mudança de cor) */
+.nav_mobile input[type="checkbox"]:checked ~ label img.menu-icon {
+    transform: rotate(90deg); /* Exemplo: girar o ícone quando o menu abrir */
+}
+
+/* Menu lateral */
+.nav_mobile nav {
+    position: fixed;
+    top: 0;
+    left: -350px;
+    width: 350px;
+    height: 100vh;
+    background-color: var(--cor-creme);
+    transition: transform 0.3s ease-in-out;
+    z-index: 5;
+    border-right: 3px solid var(--cor-rosa);
+}
+
+.nav_mobile nav ul {
+    list-style: none;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.nav_mobile nav ul li {
+    margin: 20px 0;
+}
+
+.nav_mobile nav ul li a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: block;
+}
+
+.nav_mobile input[type="checkbox"]:checked ~ nav {
+    transform: translateX(350px);
 }
 
 /* Layout principal de conteúdo */
@@ -107,7 +151,7 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 }
 
 /* Formulário de cliente */
@@ -117,7 +161,8 @@ nav {
     border: 5px solid var(--cor-rosa);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 30px;
+    margin: 0 auto;
+    /* Center the container horizontally */
 }
 
 .form-title {
@@ -130,17 +175,16 @@ nav {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    padding: 3px;
 }
-
 
 .form-group label {
-    width: 90px;
+    width: 150px;
     font-weight: bold;
-
 }
 
-.form-group input, .form-group select, .form-group textarea {
+.form-group input,
+.form-group select,
+.form-group textarea {
     flex: 1;
     padding: 8px;
     border: 1px solid var(--cor-borda);
@@ -148,8 +192,26 @@ nav {
 }
 
 .form-group textarea {
-    min-height: 180px;
+    min-height: 150px;
     resize: vertical;
+}
+
+/* Dropdown do select */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
 }
 
 .alinhaBtns {
@@ -159,7 +221,7 @@ nav {
     padding: 7px;
     width: 100%;
     margin: 5px;
-    gap: 2px; 
+    gap: 2px;
     margin-top: 15px;
     border-radius: 25px;
     cursor: pointer;
@@ -167,9 +229,11 @@ nav {
     position: relative;
     z-index: 1;
 }
-.form-buttons:hover {
-    background-color: #fffafd;
+
+.alinhaBtns:hover {
+    background-color: #fee1f1;
 }
+
 .listaBtns {
     background-color: #fffafd;
     color: #3a2618;
@@ -177,7 +241,7 @@ nav {
     padding: 10px;
     width: 40%;
     margin: 10px 0;
-    gap: 20px; 
+    gap: 20px;
     margin-top: 25px;
     border-radius: 25px;
     cursor: pointer;
@@ -185,6 +249,11 @@ nav {
     position: relative;
     z-index: 1;
 }
+
+.listaBtns:hover {
+    background-color: #fee1f1;
+}
+
 /*lista*/
 table {
     width: 80%;
@@ -192,7 +261,8 @@ table {
     margin: 20px 0;
 }
 
-table th, table td {
+table th,
+table td {
     border: 1px solid var(--cor-rosa);
     padding: 8px;
     text-align: left;
@@ -202,12 +272,13 @@ table th {
     background-color: var(--cor-rosa);
     font-weight: bold;
 }
+
 /* Estilos do Footer */
 .footer {
     background-color: var(--cor-creme);
     border-top: 3px solid var(--cor-rosa);
     padding: 20px 0 0 0;
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
 }
 
@@ -272,93 +343,213 @@ table th {
 }
 
 .contact p {
-margin-bottom: 8px;
-display: flex;
-align-items: center;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
 }
 
 .social-icon {
-justify-content: center;
-align-items: center;
-display: flex;
-width: 32px;
-height: 32px;
-background-color: var(--cor-marrom);
-border-radius: 50%;
-transition: transform 0.3s, background-color 0.3s;
-position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    background-color: var(--cor-marrom);
+    border-radius: 50%;
+    transition: transform 0.3s, background-color 0.3s;
+    position: relative;
 }
 
 .social-icon:hover {
-transform: translateY(-3px);
-background-color: var(--cor-rosa);
+    transform: translateY(-3px);
+    background-color: var(--cor-rosa);
 }
 
 .footer-bottom {
-background-color: var(--cor-marrom);
-color: white;
-text-align: center;
-padding: 15px 0;
-margin-top: 20px;
-font-size: 0.9rem;
+    background-color: var(--cor-marrom);
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    font-size: 0.9rem;
 }
 
 .footer-bottom-links {
-margin-top: 10px;
+    margin-top: 10px;
 }
 
 .footer-bottom-links a {
-color: white;
-text-decoration: none;
-padding: 0 10px;
+    color: white;
+    text-decoration: none;
+    padding: 0 10px;
 }
 
 .footer-bottom-links a:hover {
-text-decoration: underline;
+    text-decoration: underline;
 }
 
 .separator {
-color: var(--cor-rosa);
+    color: var(--cor-rosa);
 }
 
-.paia{
-    width:60px;
+.paia {
+    width: 60px;
 
 }
 
-.logofooter{
+.logofooter {
     width: 25px;
-    margin:auto;
+    margin: auto;
 
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .content-container {
-        flex-direction: column;
+/*Responsividade*/
+@media (max-width: 790px) {
+
+    /* Menu Desktop esconde e o Mobile aparece */
+    .nav_desktop {
+        display: none;
     }
 
-    .sidebar {
+    .nav_mobile {
+        display: block;
+        position: relative;
+        /* Garante que o menu tenha um contexto de empilhamento */
+    }
+
+    .nav_mobile label {
+        position: fixed;
+        top: 10px;
+        /* Distância do topo */
+        left: 10px;
+        /* Distância da esquerda */
+        z-index: 1000;
+        /* Garante que o botão de menu fique acima do menu */
+    }
+
+    .nav_mobile input[type="checkbox"] {
+        display: none;
+    }
+
+    /* Quando o menu está aberto, a transição do ícone é aplicada */
+    .nav_mobile input[type="checkbox"]:checked~label img.menu-icon {
+        transform: rotate(90deg);
+        /* Girar o ícone */
+    }
+
+    .nav_mobile nav {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding: 10px 0;
+        height: 100%;
+        background-color: var(--cor-creme);
+        z-index: 999;
+        /* O menu ficará abaixo do botão */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Menu aberto */
+    .nav_mobile input[type="checkbox"]:checked~nav {
+        transform: translateX(0);
+    }
+
+    .nav-mobile ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+        margin-top: 60px;
+        /* Distância do topo */
+    }
+
+    .nav-mobile ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .nav-btn,
+    .listaBtns {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .logo {
+        height: 50px;
+        width: 60px;
+    }
+
+    /* Ajustes no formulário */
+    .form-container {
+        width: 90%;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    .form-title {
+        font-size: 22px;
+        text-align: center;
     }
 
     .form-group {
         flex-direction: column;
-        align-items: flex-start;
+        margin-bottom: 10px;
     }
 
     .form-group label {
         width: 100%;
+        text-align: left;
         margin-bottom: 5px;
     }
 
-    .nav-buttons {
-        flex-direction: column;
-        gap: 10px;
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
     }
 
-    .nav-btn {
+    /* Ajustes no botão de ações */
+    .alinhaBtns {
         width: 100%;
+        padding: 12px;
+    }
+
+    .listaBtns {
+        width: 100%;
+        padding: 12px;
+    }
+
+    /* Ajustes nas tabelas */
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table th {
+        background-color: var(--cor-rosa);
+        color: var(--cor-texto);
+    }
+}
+
+@media (max-width: 525px) {
+    header h2 {
+        display: none;
+        /* Esconde o título */
+    }
+
+    .logo {
+        height: 75px;
+        width: 80px;
     }
 }

@@ -42,27 +42,13 @@ header {
 }
 
 
-/* Menu de navegação */
-nav {
-    background-color: var(--cor-creme);
+/* Menu de Navegação Desktop (para telas grandes) */
+.nav_desktop {
     display: flex;
     justify-content: space-between;
+    background-color: var(--cor-creme);
     padding: 10px;
     border-bottom: 1px solid var(--cor-borda);
-}
-
-.menu-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 30px;
-}
-
-.menu-icon span {
-    height: 3px;
-    width: 100%;
-    background-color: var(--cor-texto);
-    margin: 2px 0;
 }
 
 .nav-buttons {
@@ -84,12 +70,69 @@ nav {
     display: inline-block;
 }
 
-.nav-btn:hover {
-    background-color: #8B5A2B;
+/* Menu retrátil (para telas pequenas) */
+.nav_mobile {
+    position: relative;
+    display: none; /* Escondemos por padrão */
 }
 
-.nav-btn.active {
-    background-color: #654321;
+.nav_mobile input[type="checkbox"] {
+    display: none;
+}
+
+.nav_mobile label {
+    position: fixed; /* Fixa o ícone no canto superior direito */
+    top: 10px;  /* Distância do topo */
+    left: 10px; /* Distância da direita */
+    z-index: 100; /* Garante que o ícone fique acima do conteúdo */
+}
+
+.nav_mobile img.menu-icon {
+    width: 50px; /* Tamanho reduzido do ícone */
+    height: auto;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Suaviza o efeito de transição */
+}
+
+/* Quando o menu está aberto, o ícone pode mudar (exemplo de rotação ou mudança de cor) */
+.nav_mobile input[type="checkbox"]:checked ~ label img.menu-icon {
+    transform: rotate(90deg); /* Exemplo: girar o ícone quando o menu abrir */
+}
+
+/* Menu lateral */
+.nav_mobile nav {
+    position: fixed;
+    top: 0;
+    left: -350px;
+    width: 350px;
+    height: 100vh;
+    background-color: var(--cor-creme);
+    transition: transform 0.3s ease-in-out;
+    z-index: 5;
+    border-right: 3px solid var(--cor-rosa);
+}
+
+.nav_mobile nav ul {
+    list-style: none;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.nav_mobile nav ul li {
+    margin: 20px 0;
+}
+
+.nav_mobile nav ul li a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: block;
+}
+
+.nav_mobile input[type="checkbox"]:checked ~ nav {
+    transform: translateX(350px);
 }
 
 /* Layout principal de conteúdo */
@@ -167,8 +210,8 @@ nav {
     position: relative;
     z-index: 1;
 }
-.form-buttons:hover {
-    background-color: #fffafd;
+.alinhaBtns:hover {
+    background-color: #fee1f1;
 }
 .listaBtns {
     background-color: #fffafd;
@@ -184,6 +227,9 @@ nav {
     transition: all 0.3s;
     position: relative;
     z-index: 1;
+}
+.listaBtns:hover {
+    background-color: #fee1f1;
 }
 /*lista*/
 table {
@@ -332,33 +378,165 @@ color: var(--cor-rosa);
 
 }
  
-/* Responsividade */
-@media (max-width: 768px) {
-    .content-container {
-        flex-direction: column;
+@media (max-width: 830px) {
+    .nav-btn {
+        background-color: var(--cor-creme);
+        color: var(--cor-marrom);
     }
 
-    .sidebar {
+    .nav-btn:hover {
+        background-color: var(--cor-creme);
+    }
+
+}
+
+/*Responsividade*/
+@media (max-width: 790px) {
+
+    /* Menu Desktop esconde e o Mobile aparece */
+    .nav_desktop {
+        display: none;
+    }
+
+    .nav_mobile {
+        display: block;
+        position: relative;
+        /* Garante que o menu tenha um contexto de empilhamento */
+    }
+
+    .nav_mobile label {
+        position: fixed;
+        top: 10px;
+        /* Distância do topo */
+        left: 10px;
+        /* Distância da esquerda */
+        z-index: 1000;
+        /* Garante que o botão de menu fique acima do menu */
+    }
+
+    .nav_mobile input[type="checkbox"] {
+        display: none;
+    }
+
+    /* Quando o menu está aberto, a transição do ícone é aplicada */
+    .nav_mobile input[type="checkbox"]:checked~label img.menu-icon {
+        transform: rotate(90deg);
+        /* Girar o ícone */
+    }
+
+    .nav_mobile nav {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding: 10px 0;
+        height: 100%;
+        background-color: var(--cor-creme);
+        z-index: 999;
+        /* O menu ficará abaixo do botão */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Menu aberto */
+    .nav_mobile input[type="checkbox"]:checked~nav {
+        transform: translateX(0);
+    }
+
+    .nav-mobile ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+        margin-top: 60px;
+        /* Distância do topo */
+    }
+
+    .nav-mobile ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .nav-btn,
+    .listaBtns {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .logo {
+        height: 50px;
+        width: 60px;
+    }
+
+    /* Ajustes no formulário */
+    .form-container {
+        width: 90%;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    .form-title {
+        font-size: 22px;
+        text-align: center;
     }
 
     .form-group {
         flex-direction: column;
-        align-items: flex-start;
+        margin-bottom: 10px;
     }
 
     .form-group label {
         width: 100%;
+        text-align: left;
         margin-bottom: 5px;
     }
 
-    .nav-buttons {
-        flex-direction: column;
-        gap: 10px;
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
     }
 
-    .nav-btn {
+    /* Ajustes no botão de ações */
+    .alinhaBtns {
         width: 100%;
+        padding: 12px;
+    }
+
+    .listaBtns {
+        width: 100%;
+        padding: 12px;
+    }
+
+    /* Ajustes nas tabelas */
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table th {
+        background-color: var(--cor-rosa);
+        color: var(--cor-texto);
+    }
+}
+
+@media (max-width: 525px) {
+    header h2 {
+        display: none;
+        /* Esconde o título */
+    }
+
+    .logo {
+        height: 75px;
+        width: 80px;
     }
 }
