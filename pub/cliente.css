@@ -242,6 +242,12 @@ header {
     background-color: #fee1f1;
 }
 
+.error{
+    color: red;
+    font-size: medium;
+    display: none;
+}
+
 /*lista*/
 table {
     width: 80%;

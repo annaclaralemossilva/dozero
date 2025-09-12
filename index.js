@@ -67,8 +67,8 @@ db.serialize(() => {
                             nome TEXT NOT NULL,
                             cpf TEXT NOT NULL UNIQUE,
                             rg TEXT NOT NULL,
-                            email TEXT NOT NULL,
                             telefone TEXT NOT NULL,
+                            email TEXT NOT NULL,
                             data_nascimento TEXT NOT NULL,
                             data_contratacao TEXT NOT NULL,
                             endereco TEXT NOT NULL,
@@ -101,6 +101,52 @@ db.serialize(() => {
                         )
                     `);
     // Adicionado a criação da tabela carrinho
+
+    // Adicionar colunas que podem estar faltando em tabelas existentes
+    db.run(`ALTER TABLE funcionarios ADD COLUMN email TEXT`, function (err) {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.log(
+                "Coluna email já existe em funcionarios ou outro erro:",
+                err.message,
+            );
+        }
+    });
+
+    db.run(`ALTER TABLE vendas ADD COLUMN quantidade INTEGER`, function (err) {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.log(
+                "Coluna quantidade já existe em vendas ou outro erro:",
+                err.message,
+            );
+        }
+    });
+
+    db.run(`ALTER TABLE vendas ADD COLUMN cliente_cpf TEXT`, function (err) {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.log(
+                "Coluna cliente_cpf já existe em vendas ou outro erro:",
+                err.message,
+            );
+        }
+    });
+
+    db.run(`ALTER TABLE vendas ADD COLUMN produto_id INTEGER`, function (err) {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.log(
+                "Coluna produto_id já existe em vendas ou outro erro:",
+                err.message,
+            );
+        }
+    });
+
+    db.run(`ALTER TABLE vendas ADD COLUMN data TEXT`, function (err) {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.log(
+                "Coluna data já existe em vendas ou outro erro:",
+                err.message,
+            );
+        }
+    });
 
     console.log("Tabelas criadas com sucesso.");
 });
@@ -436,7 +482,7 @@ app.put("/funcao/:id", (req, res) => {
                     .json({ message: "Funcao não encontrada." });
             }
             res.json({ message: "Funcao atualizada com sucesso." });
-        }
+        },
     );
 });
 
@@ -444,53 +490,139 @@ app.put("/funcao/:id", (req, res) => {
 ///////////////////////////////  Funcionario /////////////////////////////
 ///////////////////////////////  Funcionario /////////////////////////////
 
-    //cadastrar funcionario
-    app.post("/funcionarios", (req, res) =>{
-        const { nome, cpf, rg, email, telefone, data_nascimento, data_contratacao, endereco, funcao_id } = req.body;
-        if (!nome || !cpf || !rg || !email || !telefone || !data_nascimento || !data_contratacao || !endereco || !funcao_id) {
-            return res.status(400).json({ message: "Todos os campos são obrigatórios." });
-        }
-        const query = `INSERT INTO funcionarios (nome, cpf, rg, email, telefone, data_nascimento, data_contratacao, endereco, funcao_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        db.run(query, [nome, cpf, rg, email, telefone, data_nascimento, data_contratacao, endereco, funcao_id], function (err) {
+//cadastrar funcionario
+app.post("/funcionarios", (req, res) => {
+    const {
+        nome,
+        cpf,
+        rg,
+        telefone,
+        email,
+        data_nascimento,
+        data_contratacao,
+        endereco,
+        funcao_id,
+    } = req.body;
+    if (
+        !nome ||
+        !cpf ||
+        !rg ||
+        !telefone ||
+        !email ||
+        !data_nascimento ||
+        !data_contratacao ||
+        !endereco ||
+        !funcao_id
+    ) {
+        return res
+            .status(400)
+            .json({ message: "Todos os campos são obrigatórios." });
+    }
+    const query = `INSERT INTO funcionarios (nome, cpf, rg, telefone, email, data_nascimento, data_contratacao, endereco, funcao_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.run(
+        query,
+        [
+            nome,
+            cpf,
+            rg,
+            telefone,
+            email,
+            data_nascimento,
+            data_contratacao,
+            endereco,
+            funcao_id,
+        ],
+        function (err) {
             if (err) {
-                return res.status(500).json({ message: "Erro ao cadastrar funcionario." });
+                console.error("Erro ao cadastrar funcionario:", err.message);
+                return res
+                    .status(500)
+                    .json({
+                        message: "Erro ao cadastrar funcionario.",
+                        error: err.message,
+                    });
             }
             res.status(201).json({
                 id: this.lastID,
-                message: "Funcionario cadastrado com sucesso."
+                message: "Funcionario cadastrado com sucesso.",
             });
-        });
-    });
+        },
+    );
+});
 
-  //listar todos os funcionarios
+//listar todos os funcionarios
 
-    app.get("/funcionarios", (req, res) => {
-        const query = `SELECT f.*, fun.nomefun as funcao_nome FROM funcionarios f LEFT JOIN funcao fun ON f.funcao_id = fun.id`;
-        db.all(query, [], (err, rows) => {
+app.get("/buscar-funcionarios", (req, res) => {
+    db.all(
+        `SELECT f.id, f.nome, f.cpf, f.rg, f.telefone, f.email, f.data_nascimento, f.data_contratacao, f.endereco, f.funcao_id, fn.nomefun as funcao 
+                 FROM funcionarios f 
+                 LEFT JOIN funcao fn ON f.funcao_id = fn.id`,
+        [],
+        (err, rows) => {
             if (err) {
-                return res.status(500).json({ message: "Erro ao listar funcionarios." });
+                console.error("Erro ao buscar funcionario:", err);
+                res.status(500).send("Erro ao buscar funcionario");
+            } else {
+                res.json(rows); // Retorna todos os dados dos funcionários
             }
-            res.json(rows);
-        });
-    });
+        },
+    );
+});
 
- // atualizar funcionario
-    app.put("/funcionarios/cpf/:cpf", (req, res) => {
-        const { cpf } = req.params;
-        const { nome, rg, email, telefone, data_nascimento, data_contratacao, endereco, funcao_id } = req.body;
-        const query = `UPDATE funcionarios SET nome = ?, rg = ?, email = ?, telefone = ?, data_nascimento = ?, data_contratacao = ?, endereco = ?, funcao_id = ? WHERE cpf = ?`;
-        db.run(query, [nome, rg, email, telefone, data_nascimento, data_contratacao, endereco, funcao_id, cpf], function (err) {
+// atualizar funcionario
+app.put("/funcionarios/cpf/:cpf", (req, res) => {
+    const { cpf } = req.params;
+    const {
+        nome,
+        rg,
+        telefone,
+        email,
+        data_nascimento,
+        data_contratacao,
+        endereco,
+        funcao_id,
+    } = req.body;
+    const query = `UPDATE funcionarios SET nome = ?, rg = ?, telefone = ?, email = ?, data_nascimento = ?, data_contratacao = ?, endereco = ?, funcao_id = ? WHERE cpf = ?`;
+    db.run(
+        query,
+        [
+            nome,
+            rg,
+            telefone,
+            email,
+            data_nascimento,
+            data_contratacao,
+            endereco,
+            funcao_id,
+            cpf,
+        ],
+        function (err) {
             if (err) {
-                return res.status(500).json({ message: "Erro ao atualizar funcionario." });
+                return res
+                    .status(500)
+                    .json({ message: "Erro ao atualizar funcionario." });
             }
             if (this.changes === 0) {
-                return res.status(404).json({ message: "Funcionario não encontrado." });
+                return res
+                    .status(404)
+                    .json({ message: "Funcionario não encontrado." });
             }
             res.json({ message: "Funcionario atualizado com sucesso." });
-        });
+        },
+    );
+});
+
+// ROTA PARA BUSCAR TODAS AS FUNÇÕES PARA CADASTRAR O FUNCIONARIO
+app.get("/buscar-funcoes", (req, res) => {
+    db.all("SELECT id, nomefun FROM funcao", [], (err, rows) => {
+        if (err) {
+            console.error("Erro ao buscar funcoes:", err);
+            res.status(500).send("Erro ao buscar funcoes");
+        } else {
+            res.json(rows);
+        }
     });
-
-
+});
 
 ///////////////////////////////  Vendas /////////////////////////////
 ///////////////////////////////  Vendas /////////////////////////////
@@ -599,6 +731,206 @@ app.get("/relatorios", (req, res) => {
     });
 });
 
+// Rota para buscar relatórios de estoque
+app.get("/relatorios-estoque", (req, res) => {
+    const { produto, fornecedor } = req.query; 
+    let query = `SELECT p.id, p.nome, p.quantidade_estoque, f.nome AS fornecedor_nome FROM produtos p JOIN fornecedores f ON p.fornecedor_id = f.id WHERE 1=1`;
+    const params = [];
+    if (produto) {
+        query += ` AND p.nome LIKE ?`;
+        params.push(`%${produto}%`);
+    } 
+    if (fornecedor) {
+        query += ` AND f.nome LIKE ?`;
+        params.push(`%${fornecedor}%`);
+    } 
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            console.error("Erro ao buscar relatórios de estoque:", err);
+            res.status(500).send("Erro ao buscar relatórios de estoque");
+        } else{
+            res.json(rows);
+        }
+     },
+  );
+ });
+
+ // Rota para buscar relatórios de funcionários
+app.get("/relatorios-funcionarios", (req, res) => {
+    const { nome, funcao } = req.query;
+    let query = `SELECT f.id, f.nome, f.cpf, f.rg, f.telefone, f.email, f.data_nascimento, f.data_contratacao, f.endereco, fn.nomefun as funcao FROM funcionarios f LEFT JOIN funcao fn ON f.funcao_id = fn.id WHERE 1=1`;
+    const params = [];
+    if (nome) {
+        query += ` AND f.nome LIKE ?`;
+        params.push(`%${nome}%`);
+    }
+    if (funcao) {
+        query += ` AND fn.nomefun LIKE ?`;
+        params.push(`%${funcao}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            console.error("Erro ao buscar relatórios de funcionários:", err);
+            res.status(500).send("Erro ao buscar relatórios de funcionários");
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
+    // Rota para buscar relatórios de fornecedores
+app.get("/relatorios-fornecedores", (req, res) => {
+     const { nome, cnpj } = req.query;
+        let query = `SELECT * FROM fornecedores WHERE 1=1`;
+        const params = [];
+        if (nome) {
+            query += ` AND nome LIKE ?`;
+            params.push(`%${nome}%`);
+        }
+        if (cnpj) {
+            query += ` AND cnpj LIKE ?`;
+            params.push(`%${cnpj}%`);
+        }
+        db.all(query, params, (err, rows) => {
+            if (err) {
+                console.error("Erro ao buscar relatórios de fornecedores:", err);
+                res.status(500).send("Erro ao buscar relatórios de fornecedores");
+            } else {
+                res.json(rows);
+            }
+        });
+    });
+
+    // Rota para buscar relatórios de clientes
+app.get("/relatorios-clientes", (req, res) => {
+    const { nome, cpf } = req.query;
+    let query = `SELECT * FROM clientes WHERE 1=1`;
+    const params = [];
+    if (nome) {
+        query += ` AND nome LIKE ?`;
+        params.push(`%${nome}%`);
+    }
+    if (cpf) {
+        query += ` AND cpf LIKE ?`;
+        params.push(`%${cpf}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            console.error("Erro ao buscar relatórios de clientes:", err);
+            res.status(500).send("Erro ao buscar relatórios de clientes");
+        } else {
+            res.json(rows);
+        }
+        },
+     );
+ });
+
+// Rota para buscar relatórios de funções
+app.get("/relatorios-funcoes", (req, res) => {
+
+
+
+    
+    const { nome, descricao } = req.query;
+    let query = `SELECT * FROM funcao WHERE 1=1`;
+    const params = [];
+    if (nome) {
+        query += ` AND nomefun LIKE ?`;
+        params.push(`%${nome}%`);
+    }
+    if (descricao) {
+        query += ` AND descricao LIKE ?`;
+        params.push(`%${descricao}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err){
+            console.error("Erro ao buscar relatórios de funções:", err);
+            res.status(500).send("Erro ao buscar relatórios de funções");
+        }
+        else {
+            res.json(rows);
+        }
+        },
+     );
+ });
+
+// Rota para buscar relatórios de produtos
+app.get("/relatorios-produtos", (req, res) => {
+    const { nome, tipo } = req.query;
+    let query = `SELECT * FROM produtos WHERE 1=1`;
+    const params = [];
+    if (nome) {
+        query += ` AND nome LIKE ?`;
+        params.push(`%${nome}%`);
+    }
+    if (tipo) {
+        query += ` AND tipo LIKE ?`;
+        params.push(`%${tipo}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err){
+            console.error("Erro ao buscar relatórios de produtos:", err);
+            res.status(500).send("Erro ao buscar relatórios de produtos");
+        }
+        else {
+            res.json(rows);
+        }
+        },
+    );
+});
+
+    // Rota para buscar relatórios de carrinho
+app.get("/relatorios-carrinho", (req, res) => {
+    const { cliente_cpf, produto_id } = req.query;
+    let query = `SELECT * FROM carrinho WHERE 1=1`;
+    const params = [];
+    if (cliente_cpf) {
+        query += ` AND cliente_cpf LIKE ?`;
+        params.push(`%${cliente_cpf}%`);
+    }
+    if (produto_id) {
+        query += ` AND produto_id LIKE ?`;
+        params.push(`%${produto_id}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err){
+            console.error("Erro ao buscar relatórios de carrinho:", err);
+            res.status(500).send("Erro ao buscar relatórios de carrinho");
+        }
+        else{
+            res.json(rows);
+        }
+        },
+    );
+});
+
+    // Rota para buscar relatórios de vendas
+app.get("/relatorios-vendas", (req, res) => {
+    const { cliente_cpf, produto_id } = req.query;
+    let query = `SELECT * FROM vendas WHERE 1=1`;
+    const params = [];
+    if (cliente_cpf) {
+        query += ` AND cliente_cpf LIKE ?`;
+        params.push(`%${cliente_cpf}%`);
+    }
+    if (produto_id) {
+        query += ` AND produto_id LIKE ?`;
+        params.push(`%${produto_id}%`);
+    }
+    db.all(query, params, (err, rows) => {
+        if (err){
+            console.error("Erro ao buscar relatórios de vendas:", err);
+            res.status(500).send("Erro ao buscar relatórios de vendas");
+        }
+        else{
+            res.json(rows);
+        }
+        },
+    );
+});
+
+
+    
 // Teste para verificar se o servidor está rodando
 app.get("/", (req, res) => {
     res.send("Servidor está rodando e tabelas criadas!");

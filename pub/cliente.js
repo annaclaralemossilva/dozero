@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('cliente-form');
     if (form) {
         form.addEventListener('submit', cadastrarCliente);
+        
     }
 
     // Formatação do CPF
@@ -123,6 +124,8 @@ async function atualizarCliente() {
 
         if (response.ok) {
             alert('Cliente atualizado com sucesso!');
+            limpaCliente();
+            listarClientes(); // Recarrega a lista após atualizar
         } else {
             const errorMessage = await response.text();
             alert('Erro ao atualizar cliente: ' + errorMessage);
@@ -150,4 +153,22 @@ function selecionarCliente(nome, cpf, email, telefone, endereco) {
     document.getElementById("email").value = email;
     document.getElementById("telefone").value = telefone;
     document.getElementById("endereco").value = endereco;
+
+    // Desabilitar o campo CPF durante edição para evitar problemas
+    document.getElementById("cpf").disabled = true;
+
 }
+
+function onChangeEmail() {
+    toggleButtonsDisable();
+    toggleEmailErrors();
+}
+
+function onChangePassword() {
+    toggleButtonsDisable();
+    togglePasswordErrors();
+} 
+
+
+
+
